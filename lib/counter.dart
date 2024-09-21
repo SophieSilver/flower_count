@@ -13,7 +13,7 @@ class Counter extends StatelessWidget {
         backgroundColor: colorScheme.primaryContainer,
         foregroundColor: colorScheme.onPrimaryContainer,
         shadowColor: Colors.black,
-        title: Text("Flower Counter"),
+        title: Text("Flower Count"),
       ),
       body: Center(
         child: IconButton.filled(
