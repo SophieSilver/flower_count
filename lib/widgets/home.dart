@@ -16,7 +16,7 @@ class _HomeState extends State<Home> {
       children: [
         Expanded(child: Counter(onPress: () {})),
         Padding(
-          padding: EdgeInsets.only(bottom: 30.0),
+          padding: EdgeInsets.only(bottom: 20.0),
           child: SaveButton(onPress: () {
             Navigator.of(context).pushNamed("/save");
           }),

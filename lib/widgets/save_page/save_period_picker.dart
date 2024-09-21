@@ -8,17 +8,31 @@ enum SavePeriod {
 
 class SavePeriodPicker extends StatelessWidget {
   final SavePeriod value;
-  const SavePeriodPicker({super.key, required this.value});
+  final void Function(SavePeriod) onChanged;
+
+  const SavePeriodPicker({
+    super.key,
+    required this.value,
+    required this.onChanged,
+  });
 
   @override
   Widget build(BuildContext context) {
+    TextStyle? textStyle = Theme.of(context).textTheme.labelLarge?.copyWith(fontSize: 18.0);
+
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Text("Период: "),
+        Text("Период:", style: textStyle),
+        SizedBox(width: 20.0),
         DropdownButton(
-          onChanged: (value) {},
+          onChanged: (newVaalue) {
+            if (newVaalue != null) {
+              onChanged(newVaalue);
+            }
+          },
           value: this.value,
+          style: textStyle,
           items: [
             DropdownMenuItem(
               value: SavePeriod.oneDay,
