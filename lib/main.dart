@@ -1,9 +1,12 @@
+import 'package:flower_count/services/storage_service.dart';
 import 'package:flower_count/widgets/app_scaffold.dart';
 import 'package:flower_count/widgets/home.dart';
-import 'package:flower_count/widgets/save_page.dart';
+import 'package:flower_count/widgets/data_page.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await StorageService.init();
   runApp(const MyApp());
 }
 
@@ -22,9 +25,9 @@ class MyApp extends StatelessWidget {
       ),
       routes: {
         "/": (context) => AppScaffold(child: Home()),
-        "/save": (context) => AppScaffold(
-              title: "Сохранить",
-              child: SavePage(),
+        "/data": (context) => AppScaffold(
+              title: "Данные",
+              child: DataPage(),
             ),
       },
     );

@@ -1,17 +1,18 @@
-import 'package:flower_count/widgets/save_page/save_period_picker.dart';
+import 'package:flower_count/services/storage_service.dart';
+import 'package:flower_count/widgets/data_page/save_period_picker.dart';
 import 'package:flutter/material.dart';
 
-class SavePage extends StatefulWidget {
-  const SavePage({super.key});
+class DataPage extends StatefulWidget {
+  const DataPage({super.key});
 
   @override
-  State<SavePage> createState() => _SavePageState();
+  State<DataPage> createState() => _DataPageState();
 }
 
-class _SavePageState extends State<SavePage> {
-  SavePeriod _savePeriod = SavePeriod.oneDay;
+class _DataPageState extends State<DataPage> {
+  PeriodOption _savePeriod = PeriodOption.oneDay;
 
-  void _changeSavePeriod(SavePeriod newValue) {
+  void _changeSavePeriod(PeriodOption newValue) {
     setState(() {
       this._savePeriod = newValue;
     });
@@ -26,7 +27,7 @@ class _SavePageState extends State<SavePage> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SavePeriodPicker(
+          PeriodPicker(
             value: this._savePeriod,
             onChanged: this._changeSavePeriod,
           ),
@@ -38,7 +39,12 @@ class _SavePageState extends State<SavePage> {
                 child: Text("Сохранить как файл"),
               ),
               OutlinedButton(
-                onPressed: () {},
+                onPressed: () {
+                  StorageService.retrieveEvents(period: Duration(days: 1))
+                      .then((value) {
+                    print(value);
+                  });
+                },
                 child: Text("Отправить"),
               ),
             ],
