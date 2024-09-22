@@ -11,7 +11,7 @@ class ExportService {
   static void shareEvents(Iterable<EventEntry> events) {
     final csvEvents = eventsToCsv(events);
     final csvBytes = utf8.encode(csvEvents);
-    final fileName = "data-${DateTime.now().toIso8601String()}.csv";
+    final fileName = getDefaultFilename();
 
     Share.shareXFiles(
       [XFile.fromData(csvBytes, mimeType: "text/csv", name: fileName)],
@@ -21,7 +21,7 @@ class ExportService {
 
   static void saveEventsToFile(Iterable<EventEntry> events) async {
     final csvEvents = eventsToCsv(events);
-    final fileName = "data-${DateTime.now().toIso8601String()}.csv";
+    final fileName = getDefaultFilename();
     final isMobile = Platform.isAndroid || Platform.isIOS;
 
     final savePath = await FilePicker.platform.saveFile(

@@ -21,6 +21,11 @@ String eventsToCsv(Iterable<EventEntry> events) {
   return const ListToCsvConverter().convert(csvList);
 }
 
+String getDefaultFilename() {
+  final nowString = DateTime.now().toIso8601String().replaceAll(":", "_").replaceAll(".", "_");
+  return "data-$nowString.csv";
+}
+
 Future<void> fillTestData() async {
   DateTime now = DateTime.timestamp();
 
