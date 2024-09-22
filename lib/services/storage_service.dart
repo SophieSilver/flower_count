@@ -1,4 +1,9 @@
+import 'dart:io';
+
+import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 const _dbPath = "flower_count.db";
 
@@ -51,8 +56,17 @@ class StorageService {
   static late Database _db;
 
   static Future<void> init() async {
+    if (!Platform.isAndroid && !Platform.isIOS) {
+      databaseFactory = databaseFactoryFfi;
+    }
+
+    var _path = _dbPath;
+    if (!Platform.isAndroid && !Platform.isIOS) {
+      _path = join((await getApplicationSupportDirectory()).path, _dbPath);
+    }
+
     final db = await openDatabase(
-      _dbPath,
+      _path,
       version: 1,
       onConfigure: _onConfigure,
       onCreate: _onCreate,

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flower_count/services/export_service.dart';
 import 'package:flower_count/services/storage_service.dart';
 import 'package:flower_count/widgets/data_page/data_list.dart';
@@ -20,8 +22,38 @@ class _DataPageState extends State<DataPage> {
     });
   }
 
+  Widget _saveButton(BuildContext context) {
+    return OutlinedButton(
+      onPressed: () {
+        StorageService.retrieveEvents(
+          period: this._savePeriod.period(),
+        ).then((events) {
+          ExportService.saveEventsToFile(events);
+        });
+      },
+      child: const Text("Сохранить в файл"),
+    );
+  }
+
+  Widget _shareButton(BuildContext context) {
+    return OutlinedButton(
+      onPressed: () {
+        StorageService.retrieveEvents(
+          period: this._savePeriod.period(),
+        ).then((events) {
+          ExportService.shareEvents(events);
+        });
+      },
+      child: const Text("Отправить"),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    final buttons = Platform.isLinux
+        ? [this._saveButton(context)]
+        : [this._saveButton(context), this._shareButton(context)];
+
     return Container(
       alignment: Alignment.center,
       padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 25.0),
@@ -40,28 +72,7 @@ class _DataPageState extends State<DataPage> {
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              OutlinedButton(
-                onPressed: () {
-                  StorageService.retrieveEvents(
-                    period: this._savePeriod.period(),
-                  ).then((events) {
-                    ExportService.saveEventsToFile(events);
-                  });
-                },
-                child: const Text("Сохранить в файл"),
-              ),
-              OutlinedButton(
-                onPressed: () {
-                  StorageService.retrieveEvents(
-                    period: this._savePeriod.period(),
-                  ).then((events) {
-                    ExportService.shareEvents(events);
-                  });
-                },
-                child: const Text("Отправить"),
-              ),
-            ],
+            children: buttons,
           ),
         ],
       ),

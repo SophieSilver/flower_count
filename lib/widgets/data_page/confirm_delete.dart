@@ -13,30 +13,26 @@ class ConfirmDelete extends StatelessWidget {
       backgroundColor: colorScheme.surfaceContainerHighest,
       child: Container(
         padding: const EdgeInsets.all(24.0).copyWith(bottom: 10.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "Удалить событие",
-              style:
-                  textTheme.titleLarge?.copyWith(color: colorScheme.onSurface),
-            ),
-            const SizedBox(
-              height: 10.0,
-            ),
-            Text(
-              "Вы уверены, что хотите удалить это событие?",
-              style: textTheme.bodyMedium,
-            ),
-            const SizedBox(height: 10.0),
-            
-            Align(
-              alignment: Alignment.centerRight,
-              widthFactor: 1.95,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
+        child: IntrinsicWidth(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Удалить событие",
+                style: textTheme.titleLarge
+                    ?.copyWith(color: colorScheme.onSurface),
+              ),
+              const SizedBox(
+                height: 10.0,
+              ),
+              Text(
+                "Вы уверены, что хотите удалить это событие?",
+                style: textTheme.bodyMedium,
+              ),
+              const SizedBox(height: 10.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   TextButton(
                     onPressed: () {
@@ -53,8 +49,8 @@ class ConfirmDelete extends StatelessWidget {
                   ),
                 ],
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
