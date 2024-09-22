@@ -9,18 +9,33 @@ class Counter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
 
     return Center(
-      child: IconButton.filled(
-        onPressed: () {
-          HapticFeedback.vibrate();
-          this.onPress();
-        },
-        highlightColor: colorScheme.inversePrimary,
-        icon: Icon(Icons.add),
-        tooltip: "Создать новое событие",
-        enableFeedback: true,
-        iconSize: 72,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            "Нажмите, чтобы добавить событие",
+            style: textTheme.labelLarge?.copyWith(
+              color: colorScheme.secondary.withOpacity(0.7),
+            ),
+          ),
+          SizedBox(
+            height: 20.0,
+          ),
+          IconButton.filled(
+            onPressed: () {
+              HapticFeedback.vibrate();
+              this.onPress();
+            },
+            highlightColor: colorScheme.inversePrimary,
+            icon: Icon(Icons.add),
+            tooltip: "Создать новое событие",
+            enableFeedback: true,
+            iconSize: 72,
+          ),
+        ],
       ),
     );
   }

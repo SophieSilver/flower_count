@@ -32,10 +32,8 @@ class _DataListState extends State<DataList> {
     this._currentListCallback = null;
 
     this._setEventList(null);
-    // TODO: change in prod
     final newListCallback = CancelableOperation.fromFuture(
-      Future.delayed(Duration(seconds: 2),
-          () => StorageService.retrieveEvents(period: this.widget.period)),
+      StorageService.retrieveEvents(period: this.widget.period),
     );
 
     this._currentListCallback = newListCallback;
@@ -45,15 +43,16 @@ class _DataListState extends State<DataList> {
 
   void _deleteEvent(int index) async {
     bool shouldDelete = await showDialog(
-      context: this.context,
-      builder: ConfirmDelete().build,
-    ) ?? false;
+          context: this.context,
+          builder: ConfirmDelete().build,
+        ) ??
+        false;
 
     if (!this.mounted || !shouldDelete) {
       return;
     }
-    
-    EventEntry? removed; 
+
+    EventEntry? removed;
     this.setState(() {
       removed = this._eventList?.removeAt(index);
     });
