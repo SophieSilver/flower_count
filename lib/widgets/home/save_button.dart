@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-class SaveButton extends StatelessWidget {
+class DataButton extends StatelessWidget {
   final void Function()? onPress;
-  const SaveButton({super.key, required this.onPress});
+  const DataButton({super.key, required this.onPress});
 
   @override
   Widget build(BuildContext context) {
@@ -11,9 +11,9 @@ class SaveButton extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(Icons.save),
+          Icon(Icons.date_range),
           SizedBox(width: 15.0),
-          Text("Сохранить"),
+          Text("Данные"),
         ],
       ),
     );

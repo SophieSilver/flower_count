@@ -43,6 +43,8 @@ class PeriodPicker extends StatelessWidget {
               onChanged(newVaalue);
             }
           },
+          // padding: EdgeInsets.all(0.0),
+          
           value: this.value,
           style: textStyle,
           items: [

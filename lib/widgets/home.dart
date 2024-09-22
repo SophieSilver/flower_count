@@ -20,7 +20,7 @@ class _HomeState extends State<Home> {
         })),
         Padding(
           padding: EdgeInsets.only(bottom: 20.0),
-          child: SaveButton(onPress: () {
+          child: DataButton(onPress: () {
             Navigator.of(context).pushNamed("/data");
           }),
         ),

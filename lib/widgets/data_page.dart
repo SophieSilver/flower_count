@@ -1,5 +1,6 @@
 import 'package:flower_count/services/storage_service.dart';
-import 'package:flower_count/widgets/data_page/save_period_picker.dart';
+import 'package:flower_count/widgets/data_page/data_list.dart';
+import 'package:flower_count/widgets/data_page/data_period_picker.dart';
 import 'package:flutter/material.dart';
 
 class DataPage extends StatefulWidget {
@@ -22,17 +23,22 @@ class _DataPageState extends State<DataPage> {
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.center,
-      padding: EdgeInsets.only(top: 120.0, bottom: 20.0),
+      padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 25.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          PeriodPicker(
-            value: this._savePeriod,
-            onChanged: this._changeSavePeriod,
+          Center(
+            child: PeriodPicker(
+              value: this._savePeriod,
+              onChanged: this._changeSavePeriod,
+            ),
+          ),
+          Expanded(
+            child: DataList(period: this._savePeriod.period()),
           ),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               OutlinedButton(
                 onPressed: () {},
