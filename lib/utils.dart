@@ -18,7 +18,7 @@ String eventsToCsv(Iterable<EventEntry> events) {
       eventList;
   
 
-  return ListToCsvConverter().convert(csvList);
+  return const ListToCsvConverter().convert(csvList);
 }
 
 Future<void> fillTestData() async {

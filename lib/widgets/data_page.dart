@@ -24,7 +24,7 @@ class _DataPageState extends State<DataPage> {
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.center,
-      padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 25.0),
+      padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 25.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -49,7 +49,7 @@ class _DataPageState extends State<DataPage> {
                     ExportService.saveEventsToFile(events);
                   });
                 },
-                child: Text("Сохранить в файл"),
+                child: const Text("Сохранить в файл"),
               ),
               OutlinedButton(
                 onPressed: () {
@@ -59,7 +59,7 @@ class _DataPageState extends State<DataPage> {
                     ExportService.shareEvents(events);
                   });
                 },
-                child: Text("Отправить"),
+                child: const Text("Отправить"),
               ),
             ],
           ),

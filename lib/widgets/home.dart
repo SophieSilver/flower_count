@@ -19,7 +19,7 @@ class _HomeState extends State<Home> {
           StorageService.storeNewEvent(DateTime.timestamp());
         })),
         Padding(
-          padding: EdgeInsets.only(bottom: 20.0),
+          padding: const EdgeInsets.only(bottom: 20.0),
           child: DataButton(onPress: () {
             Navigator.of(context).pushNamed("/data");
           }),

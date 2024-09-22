@@ -8,9 +8,9 @@ enum PeriodOption {
   Duration? period() {
     switch (this) {
       case PeriodOption.oneDay:
-        return Duration(days: 1);
+        return const Duration(days: 1);
       case PeriodOption.sevenDays:
-        return Duration(days: 7);
+        return const Duration(days: 7);
       case PeriodOption.allTime:
         return null;
     }
@@ -36,7 +36,7 @@ class PeriodPicker extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Text("Период:", style: textStyle),
-        SizedBox(width: 20.0),
+        const SizedBox(width: 20.0),
         DropdownButton(
           onChanged: (newVaalue) {
             if (newVaalue != null) {
@@ -47,7 +47,7 @@ class PeriodPicker extends StatelessWidget {
           
           value: this.value,
           style: textStyle,
-          items: [
+          items: const [
             DropdownMenuItem(
               value: PeriodOption.oneDay,
               child: Text("1 день"),

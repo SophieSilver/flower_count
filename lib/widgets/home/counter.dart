@@ -21,7 +21,7 @@ class Counter extends StatelessWidget {
               color: colorScheme.secondary.withOpacity(0.7),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20.0,
           ),
           IconButton.filled(
@@ -30,7 +30,7 @@ class Counter extends StatelessWidget {
               this.onPress();
             },
             highlightColor: colorScheme.inversePrimary,
-            icon: Icon(Icons.add),
+            icon: const Icon(Icons.add),
             tooltip: "Создать новое событие",
             enableFeedback: true,
             iconSize: 72,

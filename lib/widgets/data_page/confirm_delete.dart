@@ -12,7 +12,7 @@ class ConfirmDelete extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
       backgroundColor: colorScheme.surfaceContainerHighest,
       child: Container(
-        padding: EdgeInsets.all(24.0).copyWith(bottom: 10.0),
+        padding: const EdgeInsets.all(24.0).copyWith(bottom: 10.0),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -22,7 +22,7 @@ class ConfirmDelete extends StatelessWidget {
               style:
                   textTheme.titleLarge?.copyWith(color: colorScheme.onSurface),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10.0,
             ),
             Text(
@@ -36,14 +36,14 @@ class ConfirmDelete extends StatelessWidget {
                   onPressed: () {
                     Navigator.pop(context, false);
                   },
-                  child: Text("Отмена"),
+                  child: const Text("Отмена"),
                 ),
-                SizedBox(width: 10.0),
+                const SizedBox(width: 10.0),
                 TextButton(
                   onPressed: () {
                     Navigator.pop(context, true);
                   },
-                  child: Text("Удалить"),
+                  child: const Text("Удалить"),
                 ),
               ],
             ),

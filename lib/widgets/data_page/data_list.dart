@@ -44,7 +44,7 @@ class _DataListState extends State<DataList> {
   void _deleteEvent(int index) async {
     bool shouldDelete = await showDialog(
           context: this.context,
-          builder: ConfirmDelete().build,
+          builder: const ConfirmDelete().build,
         ) ??
         false;
 
@@ -92,7 +92,7 @@ class _DataListState extends State<DataList> {
     final colorScheme = Theme.of(context).colorScheme;
 
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 14.0, horizontal: 20.0),
+      padding: const EdgeInsets.symmetric(vertical: 14.0, horizontal: 20.0),
       decoration: BoxDecoration(
         color: colorScheme.surfaceContainer,
         border: Border(
@@ -115,7 +115,7 @@ class _DataListState extends State<DataList> {
         child: Container(
           color: colorScheme.surfaceContainerLowest,
           alignment: Alignment.center,
-          child: CircularProgressIndicator(),
+          child: const CircularProgressIndicator(),
         ),
       );
     }
@@ -146,7 +146,7 @@ class _DataListState extends State<DataList> {
     final colorScheme = Theme.of(context).colorScheme;
 
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 20.0),
+      margin: const EdgeInsets.symmetric(vertical: 20.0),
       decoration: BoxDecoration(
         border: Border.all(color: colorScheme.secondaryContainer, width: 2.0),
         borderRadius: BorderRadius.circular(20.0),

@@ -19,7 +19,7 @@ class EventListView extends StatelessWidget {
           final (index, event) = indexedEvent;
 
           return Container(
-            padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0)
+            padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0)
                 .copyWith(right: 10.0),
             decoration: BoxDecoration(
               border: Border(
@@ -35,7 +35,7 @@ class EventListView extends StatelessWidget {
                 Text(formatDateTime(event.dateTime)),
                 IconButton.outlined(
                   onPressed: () => this.onDelete(index),
-                  icon: Icon(Icons.delete_forever),
+                  icon: const Icon(Icons.delete_forever),
                 )
               ],
             ),

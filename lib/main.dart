@@ -1,5 +1,4 @@
 import 'package:flower_count/services/storage_service.dart';
-import 'package:flower_count/utils.dart';
 import 'package:flower_count/widgets/app_scaffold.dart';
 import 'package:flower_count/widgets/home.dart';
 import 'package:flower_count/widgets/data_page.dart';
@@ -25,8 +24,8 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       routes: {
-        "/": (context) => AppScaffold(child: Home()),
-        "/data": (context) => AppScaffold(
+        "/": (context) => const AppScaffold(child: Home()),
+        "/data": (context) => const AppScaffold(
               title: "Данные",
               child: DataPage(),
             ),
