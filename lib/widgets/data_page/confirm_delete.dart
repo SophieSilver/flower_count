@@ -29,23 +29,30 @@ class ConfirmDelete extends StatelessWidget {
               "Вы уверены, что хотите удалить это событие?",
               style: textTheme.bodyMedium,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.pop(context, false);
-                  },
-                  child: const Text("Отмена"),
-                ),
-                const SizedBox(width: 10.0),
-                TextButton(
-                  onPressed: () {
-                    Navigator.pop(context, true);
-                  },
-                  child: const Text("Удалить"),
-                ),
-              ],
+            const SizedBox(height: 10.0),
+            
+            Align(
+              alignment: Alignment.centerRight,
+              widthFactor: 1.95,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context, false);
+                    },
+                    child: const Text("Отмена"),
+                  ),
+                  const SizedBox(width: 10.0),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context, true);
+                    },
+                    child: const Text("Удалить"),
+                  ),
+                ],
+              ),
             ),
           ],
         ),
