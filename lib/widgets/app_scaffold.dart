@@ -11,10 +11,11 @@ class AppScaffold extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: colorScheme.primaryContainer,
-        foregroundColor: colorScheme.onPrimaryContainer,
+        backgroundColor: colorScheme.primaryContainer.withOpacity(1.0),
+        foregroundColor: colorScheme.onPrimaryContainer.withOpacity(1.0),
         shadowColor: Colors.black,
         title: Text(this.title ?? "Flower Count"),
+        scrolledUnderElevation: 0.0,
       ),
       body: child,
     );

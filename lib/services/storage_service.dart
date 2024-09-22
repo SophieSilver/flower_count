@@ -69,13 +69,18 @@ class StorageService {
     StorageService._db = db;
   }
 
-  static Future<void> storeNewEvent() async {
-    final timestamp = DateTime.timestamp().millisecondsSinceEpoch ~/ 1000;
+  static Future<void> storeNewEvent(DateTime event) async {
+    final timestamp = event.millisecondsSinceEpoch ~/ 1000;
 
     await _db.insert("events", {"timestamp": timestamp});
   }
 
-  static Future<Iterable<EventEntry>> retrieveEvents({Duration? period, int? offset, int? limit}) async {
+  static Future<Iterable<EventEntry>> retrieveEvents({
+    Duration? period,
+    int? offset,
+    int? limit,
+  }) async //
+  {
     final int now = DateTime.timestamp().millisecondsSinceEpoch ~/ 1000;
     final entries = await _db.query("events",
         columns: ["id", "timestamp"],
@@ -86,5 +91,9 @@ class StorageService {
         offset: offset);
 
     return entries.map((entryMap) => EventEntry.fromMap(entryMap));
+  }
+
+  static Future<void> deleteEvent(int id) async {
+    await _db.delete("events", where: "id = ?", whereArgs: [id]);
   }
 }

@@ -16,7 +16,7 @@ class _HomeState extends State<Home> {
     return Column(
       children: [
         Expanded(child: Counter(onPress: () {
-          StorageService.storeNewEvent();
+          StorageService.storeNewEvent(DateTime.timestamp());
         })),
         Padding(
           padding: EdgeInsets.only(bottom: 20.0),
