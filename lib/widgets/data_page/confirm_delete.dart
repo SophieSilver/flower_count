@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class ConfirmDelete extends StatelessWidget {
+  const ConfirmDelete({super.key});
+
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;

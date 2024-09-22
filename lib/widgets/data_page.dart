@@ -1,3 +1,4 @@
+import 'package:flower_count/services/export_service.dart';
 import 'package:flower_count/services/storage_service.dart';
 import 'package:flower_count/widgets/data_page/data_list.dart';
 import 'package:flower_count/widgets/data_page/data_period_picker.dart';
@@ -41,14 +42,21 @@ class _DataPageState extends State<DataPage> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               OutlinedButton(
-                onPressed: () {},
-                child: Text("Сохранить как файл"),
+                onPressed: () {
+                  StorageService.retrieveEvents(
+                    period: this._savePeriod.period(),
+                  ).then((events) {
+                    ExportService.saveEventsToFile(events);
+                  });
+                },
+                child: Text("Сохранить в файл"),
               ),
               OutlinedButton(
                 onPressed: () {
-                  StorageService.retrieveEvents(period: Duration(days: 1))
-                      .then((value) {
-                    print(value);
+                  StorageService.retrieveEvents(
+                    period: this._savePeriod.period(),
+                  ).then((events) {
+                    ExportService.shareEvents(events);
                   });
                 },
                 child: Text("Отправить"),

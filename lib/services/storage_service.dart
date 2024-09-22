@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:sqflite/sqflite.dart';
 
 const _dbPath = "flower_count.db";
@@ -53,12 +51,6 @@ class StorageService {
   static late Database _db;
 
   static Future<void> init() async {
-    // TODO: remove in prod
-    var dbFile = File("${await getDatabasesPath()}/$_dbPath");
-    try {
-      await dbFile.delete();
-    } on Exception catch (_) {}
-
     final db = await openDatabase(
       _dbPath,
       version: 1,
