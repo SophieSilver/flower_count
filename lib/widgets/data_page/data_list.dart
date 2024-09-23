@@ -153,7 +153,7 @@ class _DataListState extends State<DataList> {
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(18.0), // 20 - 2 pixels of border
-        clipBehavior: Clip.antiAliasWithSaveLayer,
+        clipBehavior: Clip.antiAlias,
         child: this._tableWidget(context),
       ),
     );
