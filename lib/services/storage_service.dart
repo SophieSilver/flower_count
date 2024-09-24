@@ -1,29 +1,11 @@
 import 'dart:io';
 
+import 'package:flower_count/event_entry.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:sqflite/sqflite.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 const _dbPath = "flower_count.db";
-
-class EventEntry {
-  final int id;
-  final DateTime dateTime;
-
-  const EventEntry({required this.id, required this.dateTime});
-
-  EventEntry.fromMap(Map<String, Object?> map)
-      : id = map["id"] as int,
-        dateTime = DateTime.fromMillisecondsSinceEpoch(
-            (map["timestamp"] as int) * 1000,
-            isUtc: false);
-
-  @override
-  String toString() {
-    return "{id: $id, dateTime: $dateTime}";
-  }
-}
 
 class UnknownDatabaseVersionException implements Exception {
   @override
@@ -60,13 +42,13 @@ class StorageService {
       databaseFactory = databaseFactoryFfi;
     }
 
-    var _path = _dbPath;
+    var path = _dbPath;
     if (!Platform.isAndroid && !Platform.isIOS) {
-      _path = join((await getApplicationSupportDirectory()).path, _dbPath);
+      path = join((await getApplicationSupportDirectory()).path, _dbPath);
     }
 
     final db = await openDatabase(
-      _path,
+      path,
       version: 1,
       onConfigure: _onConfigure,
       onCreate: _onCreate,

@@ -1,4 +1,5 @@
 import 'package:async/async.dart';
+import 'package:flower_count/event_entry.dart';
 import 'package:flower_count/services/storage_service.dart';
 import 'package:flower_count/widgets/data_page/confirm_delete.dart';
 import 'package:flower_count/widgets/data_page/event_list_view.dart';

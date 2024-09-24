@@ -14,11 +14,11 @@ class DataPage extends StatefulWidget {
 }
 
 class _DataPageState extends State<DataPage> {
-  PeriodOption _savePeriod = PeriodOption.oneDay;
+  PeriodOption _savePeriodOption = PeriodOption.oneDay;
 
   void _changeSavePeriod(PeriodOption newValue) {
     setState(() {
-      this._savePeriod = newValue;
+      this._savePeriodOption = newValue;
     });
   }
 
@@ -26,7 +26,7 @@ class _DataPageState extends State<DataPage> {
     return OutlinedButton(
       onPressed: () {
         StorageService.retrieveEvents(
-          period: this._savePeriod.period(),
+          period: this._savePeriodOption.period(),
         ).then((events) {
           ExportService.saveEventsToFile(events);
         });
@@ -39,7 +39,7 @@ class _DataPageState extends State<DataPage> {
     return OutlinedButton(
       onPressed: () {
         StorageService.retrieveEvents(
-          period: this._savePeriod.period(),
+          period: this._savePeriodOption.period(),
         ).then((events) {
           ExportService.shareEvents(events);
         });
@@ -63,12 +63,12 @@ class _DataPageState extends State<DataPage> {
         children: [
           Center(
             child: PeriodPicker(
-              value: this._savePeriod,
+              value: this._savePeriodOption,
               onChanged: this._changeSavePeriod,
             ),
           ),
           Expanded(
-            child: DataList(period: this._savePeriod.period()),
+            child: DataList(period: this._savePeriodOption.period()),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
