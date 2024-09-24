@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:flower_count/event_entry.dart';
+import 'package:flower_count/model/event_entry.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';

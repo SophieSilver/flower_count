@@ -1,92 +1,13 @@
-import 'package:async/async.dart';
-import 'package:flower_count/event_entry.dart';
-import 'package:flower_count/services/storage_service.dart';
-import 'package:flower_count/widgets/data_page/confirm_delete.dart';
-import 'package:flower_count/widgets/data_page/event_list_view.dart';
+import 'dart:collection';
+
+import 'package:flower_count/model/event_entry.dart';
+import 'package:flower_count/model/event_list.dart';
+import 'package:flower_count/widgets/data_page/data_list/event_list_view.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class DataList extends StatefulWidget {
-  final Duration? period;
-
-  const DataList({super.key, this.period});
-
-  @override
-  State<DataList> createState() => _DataListState();
-}
-
-class _DataListState extends State<DataList> {
-  CancelableOperation<Iterable<EventEntry>>? _currentListCallback;
-  List<EventEntry>? _eventList;
-
-  void _setEventList(List<EventEntry>? value) {
-    if (!this.mounted) {
-      return;
-    }
-
-    setState(() {
-      this._eventList = value;
-    });
-  }
-
-  void _fetchEventList() async {
-    await this._currentListCallback?.cancel();
-    this._currentListCallback = null;
-
-    this._setEventList(null);
-    final newListCallback = CancelableOperation.fromFuture(
-      StorageService.retrieveEvents(period: this.widget.period),
-    );
-
-    this._currentListCallback = newListCallback;
-    final newList = (await newListCallback.value).toList();
-    this._setEventList(newList);
-  }
-
-  void _deleteEvent(int index) async {
-    bool shouldDelete = await showDialog(
-          context: this.context,
-          builder: const ConfirmDelete().build,
-        ) ??
-        false;
-
-    if (!this.mounted || !shouldDelete) {
-      return;
-    }
-
-    EventEntry? removed;
-    this.setState(() {
-      removed = this._eventList?.removeAt(index);
-    });
-
-    if (removed == null) {
-      return;
-    }
-
-    StorageService.deleteEvent(removed!.id);
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    this._fetchEventList();
-  }
-
-  @override
-  void didUpdateWidget(covariant DataList oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (this.widget.period == oldWidget.period) {
-      return;
-    }
-    this._fetchEventList();
-  }
-
-  @override
-  void dispose() {
-    this._currentListCallback?.cancel();
-    this._currentListCallback = null;
-
-    super.dispose();
-  }
+class DataList extends StatelessWidget {
+  const DataList({super.key});
 
   Widget _headerWidget(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
@@ -100,36 +21,51 @@ class _DataListState extends State<DataList> {
           bottom: BorderSide(color: colorScheme.secondaryContainer),
         ),
       ),
-      child: Text(
-        "Всего: ${this._eventList?.length.toString() ?? ""}",
-        style: textTheme.labelLarge?.copyWith(fontSize: 16.0),
-        textAlign: TextAlign.start,
+      child: Consumer<EventList>(
+        builder: (context, eventList, _) => Text(
+          "Всего: ${eventList.data?.length.toString() ?? ""}",
+          style: textTheme.labelLarge?.copyWith(fontSize: 16.0),
+          textAlign: TextAlign.start,
+        ),
       ),
     );
   }
 
-  Widget _eventListWidget(BuildContext context) {
+  Widget _tableBodyLoading(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
 
-    if (this._eventList == null) {
-      return Expanded(
-        child: Container(
-          color: colorScheme.surfaceContainerLowest,
-          alignment: Alignment.center,
-          child: const CircularProgressIndicator(),
-        ),
-      );
-    }
+    return Expanded(
+      child: Container(
+        color: colorScheme.surfaceContainerLowest,
+        alignment: Alignment.center,
+        child: const CircularProgressIndicator(),
+      ),
+    );
+  }
+
+  Widget _tableBodyData(
+    BuildContext context,
+    UnmodifiableListView<EventEntry> eventListData,
+  ) {
+    final colorScheme = Theme.of(context).colorScheme;
 
     return Expanded(
       child: Container(
         color: colorScheme.surfaceContainerLowest,
         child: EventListView(
-          events: this._eventList!,
-          onDelete: this._deleteEvent,
+          events: eventListData,
         ),
       ),
     );
+  }
+
+  Widget _tableBodyWidget(BuildContext context) {
+    return Consumer<EventList>(builder: (context, eventList, _) {
+      if (eventList.data == null) {
+        return _tableBodyLoading(context);
+      }
+      return _tableBodyData(context, eventList.data!);
+    });
   }
 
   Widget _tableWidget(BuildContext context) {
@@ -137,7 +73,7 @@ class _DataListState extends State<DataList> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         this._headerWidget(context),
-        this._eventListWidget(context),
+        this._tableBodyWidget(context),
       ],
     );
   }

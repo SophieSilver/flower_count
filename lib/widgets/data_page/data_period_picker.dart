@@ -1,4 +1,6 @@
+import 'package:flower_count/model/event_list.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 enum PeriodOption {
   oneDay,
@@ -17,15 +19,21 @@ enum PeriodOption {
   }
 }
 
-class PeriodPicker extends StatelessWidget {
-  final PeriodOption value;
-  final void Function(PeriodOption) onChanged;
+class PeriodPicker extends StatefulWidget {
+  const PeriodPicker({super.key});
 
-  const PeriodPicker({
-    super.key,
-    required this.value,
-    required this.onChanged,
-  });
+  @override
+  State<PeriodPicker> createState() => _PeriodPickerState();
+}
+
+class _PeriodPickerState extends State<PeriodPicker> {
+  PeriodOption _option = PeriodOption.oneDay;
+
+  void _setOption(PeriodOption newOption) {
+    setState(() {
+      _option = newOption;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,14 +46,13 @@ class PeriodPicker extends StatelessWidget {
         Text("Период:", style: textStyle),
         const SizedBox(width: 20.0),
         DropdownButton(
-          onChanged: (newVaalue) {
-            if (newVaalue != null) {
-              onChanged(newVaalue);
+          onChanged: (newValue) {
+            if (newValue != null) {
+              _setOption(newValue);
+              Provider.of<EventList>(context, listen: false).setPeriod(newValue.period());
             }
           },
-          // padding: EdgeInsets.all(0.0),
-          
-          value: this.value,
+          value: _option,
           style: textStyle,
           items: const [
             DropdownMenuItem(

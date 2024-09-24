@@ -1,35 +1,22 @@
 import 'dart:io';
 
+import 'package:flower_count/model/event_list.dart';
 import 'package:flower_count/services/export_service.dart';
-import 'package:flower_count/services/storage_service.dart';
 import 'package:flower_count/widgets/data_page/data_list.dart';
 import 'package:flower_count/widgets/data_page/data_period_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class DataPage extends StatefulWidget {
+class DataPage extends StatelessWidget {
   const DataPage({super.key});
-
-  @override
-  State<DataPage> createState() => _DataPageState();
-}
-
-class _DataPageState extends State<DataPage> {
-  PeriodOption _savePeriodOption = PeriodOption.oneDay;
-
-  void _changeSavePeriod(PeriodOption newValue) {
-    setState(() {
-      this._savePeriodOption = newValue;
-    });
-  }
 
   Widget _saveButton(BuildContext context) {
     return OutlinedButton(
       onPressed: () {
-        StorageService.retrieveEvents(
-          period: this._savePeriodOption.period(),
-        ).then((events) {
+        final events = Provider.of<EventList>(context, listen: false).data;
+        if (events != null) {
           ExportService.saveEventsToFile(events);
-        });
+        }
       },
       child: const Text("Сохранить в файл"),
     );
@@ -38,43 +25,42 @@ class _DataPageState extends State<DataPage> {
   Widget _shareButton(BuildContext context) {
     return OutlinedButton(
       onPressed: () {
-        StorageService.retrieveEvents(
-          period: this._savePeriodOption.period(),
-        ).then((events) {
+        final events = Provider.of<EventList>(context, listen: false).data;
+        if (events != null) {
           ExportService.shareEvents(events);
-        });
+        }
       },
       child: const Text("Отправить"),
     );
   }
 
+  Widget _buttons(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: Platform.isLinux
+          ? [this._saveButton(context)]
+          : [this._saveButton(context), this._shareButton(context)],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    final buttons = Platform.isLinux
-        ? [this._saveButton(context)]
-        : [this._saveButton(context), this._shareButton(context)];
-
     return Container(
       alignment: Alignment.center,
       padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 25.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Center(
-            child: PeriodPicker(
-              value: this._savePeriodOption,
-              onChanged: this._changeSavePeriod,
-            ),
-          ),
-          Expanded(
-            child: DataList(period: this._savePeriodOption.period()),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: buttons,
-          ),
-        ],
+      child: ChangeNotifierProvider<EventList>(
+        // FIXME: We currently have 2 places where the default period is set
+        create: (context) => EventList(period: PeriodOption.oneDay.period()),
+        // using builder instead of child to capture the provider in the context to buttons
+        builder: (context, _) => Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const Center(child: PeriodPicker()),
+            const Expanded(child: DataList()),
+            _buttons(context),
+          ],
+        ),
       ),
     );
   }
