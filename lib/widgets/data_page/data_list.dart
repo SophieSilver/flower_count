@@ -60,12 +60,14 @@ class DataList extends StatelessWidget {
   }
 
   Widget _tableBodyWidget(BuildContext context) {
-    return Consumer<EventList>(builder: (context, eventList, _) {
-      if (eventList.data == null) {
-        return _tableBodyLoading(context);
-      }
-      return _tableBodyData(context, eventList.data!);
-    });
+    return Consumer<EventList>(
+      builder: (context, eventList, _) {
+        if (eventList.data == null) {
+          return _tableBodyLoading(context);
+        }
+        return _tableBodyData(context, eventList.data!);
+      },
+    );
   }
 
   Widget _tableWidget(BuildContext context) {

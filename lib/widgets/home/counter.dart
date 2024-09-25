@@ -1,39 +1,23 @@
+import 'package:flower_count/widgets/home/counter/click_notifier.dart';
+import 'package:flower_count/widgets/home/counter/counter_button.dart';
+import 'package:flower_count/widgets/home/counter/on_click_pop_up.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 class Counter extends StatelessWidget {
-  final void Function() onPress;
-
-  const Counter({super.key, required this.onPress});
+  const Counter({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-    final textTheme = Theme.of(context).textTheme;
-
-    return Center(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
+    return ChangeNotifierProvider(
+      create: (context) => ClickNotifier(),
+      builder: (context, _) => Stack(
         children: [
-          Text(
-            "Нажмите, чтобы добавить событие",
-            style: textTheme.labelLarge?.copyWith(
-              color: colorScheme.secondary.withOpacity(0.7),
-            ),
-          ),
-          const SizedBox(
-            height: 20.0,
-          ),
-          IconButton.filled(
-            onPressed: () {
-              HapticFeedback.vibrate();
-              this.onPress();
-            },
-            highlightColor: colorScheme.inversePrimary,
-            icon: const Icon(Icons.add),
-            tooltip: "Создать новое событие",
-            enableFeedback: true,
-            iconSize: 72,
+          const Center(child: CounterButton()),
+          Container(
+            alignment: Alignment.bottomCenter,
+            padding: const EdgeInsets.all(50.0),
+            child: const OnClickPopUp(),
           ),
         ],
       ),

@@ -150,6 +150,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_hooks:
+    dependency: "direct main"
+    description:
+      name: flutter_hooks
+      sha256: "36b80c53f0822ab2ed3ebe2050b19e2de7bd3dca100270e51b1aadd80861c2a3"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.21.1-pre.4"
   flutter_launcher_icons:
     dependency: "direct dev"
     description:
