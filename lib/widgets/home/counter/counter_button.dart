@@ -24,17 +24,24 @@ class CounterButton extends StatelessWidget {
         const SizedBox(
           height: 20.0,
         ),
-        IconButton.filled(
-          onPressed: () {
-            HapticFeedback.vibrate();
-            StorageService.storeNewEvent(DateTime.timestamp());
-            Provider.of<ClickNotifier>(context, listen: false).notify();
-          },
-          highlightColor: colorScheme.inversePrimary,
-          icon: const Icon(Icons.add),
-          tooltip: "Создать новое событие",
-          enableFeedback: true,
-          iconSize: 72,
+        Material(
+          child: Ink(
+            decoration: ShapeDecoration(
+              shape: CircleBorder(),
+              color: colorScheme.primaryContainer,
+            ),
+            child: IconButton(
+              onPressed: () {
+                HapticFeedback.vibrate();
+                StorageService.storeNewEvent(DateTime.timestamp());
+                Provider.of<ClickNotifier>(context, listen: false).notify();
+              },
+              highlightColor: colorScheme.onPrimaryContainer.withOpacity(0.3),
+              icon: const Icon(Icons.add),
+              enableFeedback: true,
+              iconSize: 72,
+            ),
+          ),
         ),
       ],
     );
